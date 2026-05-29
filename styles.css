@@ -439,4 +439,51 @@ footer {
         margin: 10% auto;
         width: 95%;
     }
+    /* Asegurar que el calendario sea visible */
+#calendarioDias {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)) !important;
+    gap: 1rem !important;
+}
+
+.calendario-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+    min-height: 200px;
+}
+
+/* Asegurar que los días se muestren correctamente */
+.dia-card {
+    background: #fefaf5;
+    border: 1px solid #ede3d8;
+    border-radius: 1.2rem;
+    padding: 0.8rem 0.4rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    display: block !important;
+}
+
+.dia-card.disponible {
+    background: #eaf7ea !important;
+    border-color: #9bc49b !important;
+    color: #2a5c2a !important;
+}
+
+.dia-card.ocupado {
+    background: #ffe7e7 !important;
+    border-color: #f3bfbf !important;
+    color: #ac4e4e !important;
+    cursor: not-allowed !important;
+    opacity: 0.8 !important;
+    text-decoration: line-through !important;
+}
+
+.dia-card.disponible:hover {
+    background: #d4ebd2 !important;
+    transform: scale(1.02);
+}
 }
