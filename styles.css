@@ -234,6 +234,18 @@ body {
     color: #b87c4f;
 }
 
+.modal-close-barberos {
+    font-size: 1.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #8b7a6b;
+    transition: 0.2s;
+}
+
+.modal-close-barberos:hover {
+    color: #b87c4f;
+}
+
 .modal-body {
     padding: 1.5rem;
 }
@@ -287,6 +299,7 @@ body {
 .horario-estado {
     font-size: 0.85rem;
     font-weight: 500;
+    margin-top: 0.3rem;
 }
 
 .horario-estado.disponible {
@@ -380,6 +393,34 @@ body {
 
 .btn-limpiar:hover {
     background: #8b3a3a;
+}
+
+/* Estilos para barbero option */
+.barbero-option {
+    padding: 1rem;
+    width: 100%;
+    text-align: left;
+    background: #fbf9f7;
+    border: 2px solid #ede3d8;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.barbero-option:hover {
+    border-color: #b87c4f;
+    transform: translateY(-2px);
+}
+
+.barbero-option strong {
+    display: block;
+    color: #2c2b28;
+    margin-bottom: 0.3rem;
+}
+
+.barbero-option small {
+    color: #8b7a6b;
 }
 
 /* ubicacion y horarios */
