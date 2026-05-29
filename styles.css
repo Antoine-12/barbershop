@@ -1,0 +1,276 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: #f8f5f0;
+    color: #2c2b28;
+    line-height: 1.5;
+}
+
+/* Layout principal */
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+}
+
+/* Header & barbería info */
+.hero {
+    background: #1e1e1e;
+    border-radius: 2rem;
+    padding: 1.8rem 2rem;
+    margin-bottom: 2rem;
+    color: #f1ede8;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+}
+
+.shop-info h1 {
+    font-size: 2rem;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.3rem;
+}
+
+.shop-info p {
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+
+.gallery-mini {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.gallery-mini img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 1rem;
+    border: 2px solid #e2b87a;
+    transition: transform 0.2s;
+}
+
+.gallery-mini img:hover {
+    transform: scale(1.05);
+}
+
+/* Navegación tipo menu */
+.nav-menu {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e5dfd7;
+    padding-bottom: 1rem;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #4a3b2c;
+    background: #f0ebe4;
+}
+
+.nav-btn i {
+    margin-right: 8px;
+}
+
+.nav-btn.active {
+    background: #b87c4f;
+    color: white;
+    box-shadow: 0 4px 10px rgba(184,124,79,0.3);
+}
+
+/* Paneles */
+.panel {
+    display: none;
+    background: white;
+    border-radius: 1.8rem;
+    padding: 1.8rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    margin-top: 0.5rem;
+    transition: all 0.2s;
+}
+
+.panel.active-panel {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+/* Tarjetas calendario */
+.calendario-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.dia-card {
+    background: #fefaf5;
+    border: 1px solid #ede3d8;
+    border-radius: 1.2rem;
+    padding: 0.8rem 0.4rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.dia-card.disponible {
+    background: #eaf7ea;
+    border-color: #9bc49b;
+    color: #2a5c2a;
+}
+
+.dia-card.ocupado {
+    background: #ffe7e7;
+    border-color: #f3bfbf;
+    color: #ac4e4e;
+    cursor: not-allowed;
+    opacity: 0.8;
+    text-decoration: line-through;
+}
+
+.dia-card.disponible:hover {
+    background: #d4ebd2;
+    transform: scale(1.02);
+}
+
+.horarios-container {
+    margin-top: 2rem;
+    border-top: 1px dashed #ddd;
+    padding-top: 1.5rem;
+}
+
+.horario-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin: 1rem 0;
+}
+
+.horario-btn {
+    background: #f0eae3;
+    border: none;
+    padding: 0.6rem 1.3rem;
+    border-radius: 2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.horario-btn:hover {
+    background: #e2cfbc;
+}
+
+.barberos-select {
+    display: flex;
+    gap: 1rem;
+    margin: 1.2rem 0;
+    flex-wrap: wrap;
+}
+
+.barbero-option {
+    background: #f6f1eb;
+    border-radius: 1rem;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.1s;
+}
+
+.barbero-option.selected {
+    border-color: #b87c4f;
+    background: #fdf5ed;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.btn-reservar {
+    background: #b87c4f;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 2rem;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: transform 0.1s;
+}
+
+.btn-reservar:hover {
+    background: #a06a42;
+}
+
+.mensaje-reserva {
+    margin-top: 1.5rem;
+    background: #f3f1ea;
+    border-left: 6px solid #b87c4f;
+    padding: 1rem;
+    border-radius: 1rem;
+    font-weight: 500;
+}
+
+/* ubicacion y horarios */
+.info-box {
+    background: #fbf9f7;
+    border-radius: 1.5rem;
+    padding: 1.2rem;
+    margin: 1rem 0;
+}
+
+.horas-op {
+    font-size: 1rem;
+    list-style: none;
+}
+
+.horas-op li {
+    margin: 0.5rem 0;
+}
+
+.mapa-placeholder {
+    background: #ded7cf;
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+footer {
+    text-align: center;
+    margin-top: 2.5rem;
+    font-size: 0.8rem;
+    color: #8b7a6b;
+}
+
+@media (max-width: 680px) {
+    .container {
+        padding: 1rem;
+    }
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+    .calendario-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+}
