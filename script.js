@@ -86,23 +86,34 @@ const btnLimpiarReservas = document.getElementById("btnLimpiarReservas");
 
 let fechaSeleccionada = null;
 
-// Renderizar calendario
+// Renderizar calendario - ESTA ES LA FUNCIÓN PRINCIPAL
 function renderCalendario() {
+    if (!calendarioDiv) {
+        console.error("No se encontró el elemento calendarioDias");
+        return;
+    }
+    
     calendarioDiv.innerHTML = "";
+    console.log("Renderizando calendario...");
+    
     for (let i = 0; i < diasTotales; i++) {
         let fecha = new Date(hoy);
         fecha.setDate(hoy.getDate() + i);
         let fechaStr = formatearFecha(fecha);
         let esOcupado = fechasOcupadas.has(fechaStr);
+        
         let diaCard = document.createElement("div");
         diaCard.className = `dia-card ${esOcupado ? 'ocupado' : 'disponible'}`;
+        
         let diaSemana = fecha.toLocaleDateString('es-ES', { weekday: 'short' });
         let diaNumero = fecha.getDate();
         let mes = fecha.getMonth() + 1;
+        
         diaCard.innerHTML = `<strong>${diaSemana}</strong><br>${diaNumero}<br><small>${mes}/${diaNumero}</small>`;
         
         if (!esOcupado) {
             diaCard.addEventListener("click", () => {
+                console.log("Día seleccionado:", fechaStr);
                 fechaSeleccionada = {
                     fechaStr: fechaStr,
                     fechaObj: fecha,
@@ -111,12 +122,16 @@ function renderCalendario() {
                 abrirModalHorarios();
             });
         }
+        
         calendarioDiv.appendChild(diaCard);
     }
+    
+    console.log("Calendario renderizado con", calendarioDiv.children.length, "días");
 }
 
 // Abrir modal con horarios
 function abrirModalHorarios() {
+    if (!fechaSeleccionada) return;
     modalFechaSpan.innerText = fechaSeleccionada.legible;
     cargarHorariosEnModal();
     modal.style.display = "block";
@@ -157,9 +172,8 @@ function cargarHorariosEnModal() {
     });
 }
 
-// Abrir modal para seleccionar barbero (usando prompt mejorado o modal)
+// Abrir modal para seleccionar barbero
 function abrirModalBarberos(horarioSeleccionado) {
-    // Crear modal de barberos dinámicamente
     const barberosModal = document.createElement("div");
     barberosModal.className = "modal";
     barberosModal.style.display = "block";
@@ -221,13 +235,10 @@ function confirmarReserva(horario, barbero) {
     reservas.push(nuevaReserva);
     guardarReservas(reservas);
     
-    // Mostrar mensaje de confirmación
     alert(`✅ ¡Reserva confirmada!\n\n📅 Día: ${fechaSeleccionada.legible}\n⏰ Horario: ${horario}\n✂️ Barbero: ${barbero.nombre}\n📍 Sucursal: 1089 Calle, 2-42 Avenida, Zona UMG\n\n💈 ¡Te esperamos!`);
     
-    // Cerrar modal principal
     modal.style.display = "none";
     
-    // Actualizar vista de reservas si está visible
     if (document.getElementById("panel-reservas").classList.contains("active-panel")) {
         renderMisReservas();
     }
@@ -245,8 +256,6 @@ function renderMisReservas() {
     }
     
     btnLimpiarReservas.style.display = "block";
-    
-    // Ordenar por fecha (más reciente primero)
     reservas.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
     
     reservas.forEach(reserva => {
@@ -279,8 +288,6 @@ function cancelarReserva(id) {
     reservas = reservas.filter(r => r.id !== id);
     guardarReservas(reservas);
     renderMisReservas();
-    
-    // Si el calendario está visible, actualizar no es necesario pero el modal se actualizará la próxima vez
     alert("✅ Reserva cancelada exitosamente");
 }
 
@@ -312,7 +319,6 @@ function switchPanel(panelId) {
         }
     });
     
-    // Si es el panel de reservas, actualizar la lista
     if (panelId === "panel-reservas") {
         renderMisReservas();
     }
@@ -326,9 +332,11 @@ btnsNav.forEach(btn => {
 });
 
 // Cerrar modal
-closeModal.addEventListener("click", () => {
-    modal.style.display = "none";
-});
+if (closeModal) {
+    closeModal.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+}
 
 window.addEventListener("click", (e) => {
     if (e.target === modal) {
@@ -336,10 +344,19 @@ window.addEventListener("click", (e) => {
     }
 });
 
-btnLimpiarReservas.addEventListener("click", limpiarTodasReservas);
+if (btnLimpiarReservas) {
+    btnLimpiarReservas.addEventListener("click", limpiarTodasReservas);
+}
 
 // Inicializar
 function init() {
+    console.log("Inicializando...");
     renderCalendario();
 }
-init();
+
+// Esperar a que el DOM esté completamente cargado
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
