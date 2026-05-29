@@ -1,3 +1,15 @@
+// Funciones de formato - DEBEN IR PRIMERO
+function formatearFecha(date) {
+    let year = date.getFullYear();
+    let month = String(date.getMonth() + 1).padStart(2, '0');
+    let day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+function formatearLegible(date) {
+    return date.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+}
+
 // DATOS MOCK: Días disponibles / ocupados
 const hoy = new Date();
 hoy.setHours(0, 0, 0, 0);
@@ -62,17 +74,6 @@ function getCuposOcupados(fechaStr, horarioStr) {
 function isHorarioDisponible(fechaStr, horarioRango) {
     const ocupados = getCuposOcupados(fechaStr, horarioRango.hora);
     return ocupados < horarioRango.cuposMax;
-}
-
-function formatearFecha(date) {
-    let year = date.getFullYear();
-    let month = String(date.getMonth() + 1).padStart(2, '0');
-    let day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-}
-
-function formatearLegible(date) {
-    return date.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 }
 
 // Elementos DOM
