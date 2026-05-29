@@ -171,97 +171,212 @@ body {
     transform: scale(1.02);
 }
 
-.horarios-container {
-    margin-top: 2rem;
-    border-top: 1px dashed #ddd;
-    padding-top: 1.5rem;
+/* Modal/Popup */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    animation: fadeIn 0.2s;
 }
 
-.horario-buttons {
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    width: 90%;
+    max-width: 550px;
+    border-radius: 1.5rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid #ede3d8;
+    background: #f8f5f0;
+    border-radius: 1.5rem 1.5rem 0 0;
+}
+
+.modal-header h3 {
+    color: #b87c4f;
+}
+
+.modal-close {
+    font-size: 1.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #8b7a6b;
+    transition: 0.2s;
+}
+
+.modal-close:hover {
+    color: #b87c4f;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-horarios {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.horario-item {
+    background: #fbf9f7;
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
     gap: 0.8rem;
-    margin: 1rem 0;
-}
-
-.horario-btn {
-    background: #f0eae3;
-    border: none;
-    padding: 0.6rem 1.3rem;
-    border-radius: 2rem;
-    font-weight: 500;
-    cursor: pointer;
     transition: 0.1s;
-    font-family: inherit;
-    font-size: 0.9rem;
 }
 
-.horario-btn:hover {
-    background: #e2cfbc;
+.horario-item.disponible-partial {
+    border-left: 4px solid #9bc49b;
 }
 
-.barberos-select {
-    display: flex;
-    gap: 1rem;
-    margin: 1.2rem 0;
-    flex-wrap: wrap;
-}
-
-.barbero-option {
-    background: #f6f1eb;
-    border-radius: 1rem;
-    padding: 0.8rem 1.2rem;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: all 0.1s;
-    flex: 1;
-    min-width: 150px;
-    text-align: center;
-}
-
-.barbero-option strong {
-    display: block;
-    margin-bottom: 0.3rem;
-}
-
-.barbero-option small {
-    font-size: 0.75rem;
+.horario-item.no-disponible {
+    border-left: 4px solid #f3bfbf;
     opacity: 0.7;
 }
 
-.barbero-option.selected {
-    border-color: #b87c4f;
-    background: #fdf5ed;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+.horario-info {
+    flex: 1;
 }
 
-.btn-reservar {
+.horario-hora {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #2c2b28;
+}
+
+.horario-cupos {
+    font-size: 0.8rem;
+    color: #8b7a6b;
+    margin-top: 0.2rem;
+}
+
+.horario-estado {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.horario-estado.disponible {
+    color: #2a5c2a;
+}
+
+.horario-estado.no-disponible {
+    color: #ac4e4e;
+}
+
+.btn-reservar-horario {
     background: #b87c4f;
     color: white;
     border: none;
-    padding: 0.8rem 2rem;
+    padding: 0.5rem 1.2rem;
     border-radius: 2rem;
-    font-weight: bold;
-    font-size: 1rem;
     cursor: pointer;
-    margin-top: 1rem;
-    transition: transform 0.1s, background 0.2s;
-    font-family: inherit;
+    font-weight: 500;
+    transition: 0.2s;
 }
 
-.btn-reservar:hover {
+.btn-reservar-horario:hover:not(:disabled) {
     background: #a06a42;
     transform: scale(1.02);
 }
 
-.mensaje-reserva {
-    margin-top: 1.5rem;
-    background: #f3f1ea;
-    border-left: 6px solid #b87c4f;
-    padding: 1rem;
+.btn-reservar-horario:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Estilos para la lista de reservas */
+.reservas-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.reserva-card {
+    background: #fbf9f7;
     border-radius: 1rem;
+    padding: 1rem;
+    border-left: 4px solid #b87c4f;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.reserva-info {
+    flex: 1;
+}
+
+.reserva-info strong {
+    display: block;
+    color: #b87c4f;
+}
+
+.reserva-fecha {
+    font-size: 0.9rem;
+    color: #4a3b2c;
+}
+
+.btn-cancelar-reserva {
+    background: #ffe7e7;
+    color: #ac4e4e;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.2s;
+}
+
+.btn-cancelar-reserva:hover {
+    background: #f3bfbf;
+}
+
+.btn-limpiar {
+    background: #ac4e4e;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    margin-top: 1rem;
     font-weight: 500;
-    line-height: 1.6;
+}
+
+.btn-limpiar:hover {
+    background: #8b3a3a;
 }
 
 /* ubicacion y horarios */
@@ -316,7 +431,12 @@ footer {
     .calendario-grid {
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     }
-    .barbero-option {
-        min-width: 100%;
+    .horario-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    .modal-content {
+        margin: 10% auto;
+        width: 95%;
     }
 }
