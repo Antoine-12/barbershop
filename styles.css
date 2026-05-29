@@ -2,13 +2,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
 }
 
 body {
     background: #f8f5f0;
     color: #2c2b28;
     line-height: 1.5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 /* Layout principal */
@@ -42,6 +42,7 @@ body {
 .shop-info p {
     opacity: 0.8;
     font-size: 0.95rem;
+    margin-top: 0.3rem;
 }
 
 .gallery-mini {
@@ -49,16 +50,31 @@ body {
     gap: 0.8rem;
 }
 
-.gallery-mini img {
+.gallery-placeholder {
     width: 80px;
     height: 80px;
-    object-fit: cover;
+    background: #2c2b28;
     border-radius: 1rem;
     border: 2px solid #e2b87a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
     transition: transform 0.2s;
 }
 
-.gallery-mini img:hover {
+.gallery-placeholder i {
+    font-size: 1.8rem;
+    color: #e2b87a;
+}
+
+.gallery-placeholder span {
+    font-size: 0.7rem;
+    color: #f1ede8;
+}
+
+.gallery-placeholder:hover {
     transform: scale(1.05);
 }
 
@@ -83,6 +99,7 @@ body {
     transition: all 0.2s;
     color: #4a3b2c;
     background: #f0ebe4;
+    font-family: inherit;
 }
 
 .nav-btn i {
@@ -103,7 +120,6 @@ body {
     padding: 1.8rem;
     box-shadow: 0 8px 24px rgba(0,0,0,0.05);
     margin-top: 0.5rem;
-    transition: all 0.2s;
 }
 
 .panel.active-panel {
@@ -176,6 +192,8 @@ body {
     font-weight: 500;
     cursor: pointer;
     transition: 0.1s;
+    font-family: inherit;
+    font-size: 0.9rem;
 }
 
 .horario-btn:hover {
@@ -192,10 +210,23 @@ body {
 .barbero-option {
     background: #f6f1eb;
     border-radius: 1rem;
-    padding: 0.6rem 1.2rem;
+    padding: 0.8rem 1.2rem;
     cursor: pointer;
     border: 2px solid transparent;
     transition: all 0.1s;
+    flex: 1;
+    min-width: 150px;
+    text-align: center;
+}
+
+.barbero-option strong {
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.barbero-option small {
+    font-size: 0.75rem;
+    opacity: 0.7;
 }
 
 .barbero-option.selected {
@@ -214,11 +245,13 @@ body {
     font-size: 1rem;
     cursor: pointer;
     margin-top: 1rem;
-    transition: transform 0.1s;
+    transition: transform 0.1s, background 0.2s;
+    font-family: inherit;
 }
 
 .btn-reservar:hover {
     background: #a06a42;
+    transform: scale(1.02);
 }
 
 .mensaje-reserva {
@@ -228,14 +261,20 @@ body {
     padding: 1rem;
     border-radius: 1rem;
     font-weight: 500;
+    line-height: 1.6;
 }
 
 /* ubicacion y horarios */
 .info-box {
     background: #fbf9f7;
     border-radius: 1.5rem;
-    padding: 1.2rem;
+    padding: 1.5rem;
     margin: 1rem 0;
+}
+
+.info-box h3 {
+    margin-bottom: 1rem;
+    color: #b87c4f;
 }
 
 .horas-op {
@@ -244,7 +283,8 @@ body {
 }
 
 .horas-op li {
-    margin: 0.5rem 0;
+    margin: 0.8rem 0;
+    padding: 0.3rem 0;
 }
 
 .mapa-placeholder {
@@ -258,10 +298,13 @@ body {
 footer {
     text-align: center;
     margin-top: 2.5rem;
+    padding-top: 1.5rem;
     font-size: 0.8rem;
     color: #8b7a6b;
+    border-top: 1px solid #e5dfd7;
 }
 
+/* Responsive */
 @media (max-width: 680px) {
     .container {
         padding: 1rem;
@@ -272,5 +315,8 @@ footer {
     }
     .calendario-grid {
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+    .barbero-option {
+        min-width: 100%;
     }
 }
