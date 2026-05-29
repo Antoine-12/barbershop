@@ -1,1 +1,85 @@
-<h1>Hola mundo</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>BarberShop | Sistema de Reservaciones</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <!-- Sección principal con información general y fotos de la barbería -->
+    <div class="hero">
+        <div class="shop-info">
+            <h1><i class="fas fa-cut"></i> Elite BarberShop</h1>
+            <p>Corte clásico • Tendencias modernas • Café artesanal</p>
+            <p><i class="fas fa-star"></i> 5.0 • Más de 300 reseñas</p>
+        </div>
+        <div class="gallery-mini">
+            <img src="https://placehold.co/400x400/e2b87a/2c2b28?text=Barber+1" alt="Sillón barbero">
+            <img src="https://placehold.co/400x400/ceb48b/2c2b28?text=Estilo" alt="Ambiente">
+            <img src="https://placehold.co/400x400/a77c46/2c2b28?text=Navajas" alt="herramientas">
+        </div>
+    </div>
+
+    <!-- Menú de navegación -->
+    <div class="nav-menu">
+        <button class="nav-btn active" data-panel="panel-calendario"><i class="far fa-calendar-alt"></i> Reservar cita</button>
+        <button class="nav-btn" data-panel="panel-ubicacion"><i class="fas fa-map-marker-alt"></i> Ubicación & Horarios</button>
+    </div>
+
+    <!-- PANEL CALENDARIO (principal) -->
+    <div id="panel-calendario" class="panel active-panel">
+        <h3><i class="far fa-calendar-check"></i> Selecciona un día disponible</h3>
+        <p>Días en verde = libres | Días en rojo = ocupados (no disponibles)</p>
+        <div id="calendarioDias" class="calendario-grid"></div>
+
+        <!-- Sección horarios y barberos (aparece al elegir día) -->
+        <div id="seccionHorariosBarbero" style="display: none;">
+            <div class="horarios-container">
+                <h4><i class="far fa-clock"></i> Horarios disponibles para <span id="diaSeleccionadoTexto"></span></h4>
+                <div id="listaHorarios" class="horario-buttons"></div>
+
+                <h4><i class="fas fa-users"></i> Elige tu barbero</h4>
+                <div id="listaBarberos" class="barberos-select"></div>
+
+                <button id="btnConfirmarReserva" class="btn-reservar"><i class="fas fa-scissors"></i> Confirmar reserva</button>
+                <div id="mensajeReserva" class="mensaje-reserva"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL UBICACIÓN Y HORAS OPERACIÓN -->
+    <div id="panel-ubicacion" class="panel">
+        <div class="info-box">
+            <h3><i class="fas fa-location-dot"></i> Nuestra ubicación</h3>
+            <p><strong>1089 Calle, 2-42 Avenida, Zona UMG</strong></p>
+            <p>📍 Ciudad Capital, 01010. Referencia: frente al gimnasio UMG</p>
+            <div class="mapa-placeholder">
+                <i class="fas fa-map" style="font-size: 2rem;"></i>
+                <p>📌 Ver mapa interactivo (Google Maps)</p>
+                <small>1089 calle 2-42 avenida, Zona UMG - a un costado de la estación de bomberos</small>
+            </div>
+        </div>
+        <div class="info-box">
+            <h3><i class="far fa-hourglass-half"></i> Horarios de operación</h3>
+            <ul class="horas-op">
+                <li><i class="fas fa-sun"></i> Lunes a Viernes: 9:00 AM - 8:00 PM</li>
+                <li><i class="fas fa-cloud-sun"></i> Sábados: 10:00 AM - 6:00 PM</li>
+                <li><i class="fas fa-moon"></i> Domingos: Cerrado (solo eventos especiales)</li>
+                <li><strong>⏱️ Última atención:</strong> 30 min antes del cierre</li>
+            </ul>
+            <p><i class="fas fa-phone-alt"></i> Tel: +502 5550-1234</p>
+        </div>
+    </div>
+    <footer>
+        <i class="fas fa-cut"></i> Elite BarberShop — Sistema demo de reservaciones
+    </footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
