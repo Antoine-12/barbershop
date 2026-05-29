@@ -86,6 +86,8 @@ const listaReservasDiv = document.getElementById("listaReservas");
 const btnLimpiarReservas = document.getElementById("btnLimpiarReservas");
 
 let fechaSeleccionada = null;
+let barberoSeleccionado = null;
+let horarioSeleccionado = null;
 
 // Renderizar calendario - ESTA ES LA FUNCIÓN PRINCIPAL
 function renderCalendario() {
@@ -120,6 +122,8 @@ function renderCalendario() {
                     fechaObj: fecha,
                     legible: formatearLegible(fecha)
                 };
+                barberoSeleccionado = null;
+                horarioSeleccionado = null;
                 abrirModalHorarios();
             });
         }
@@ -152,10 +156,10 @@ function cargarHorariosEnModal() {
         horarioItem.innerHTML = `
             <div class="horario-info">
                 <div class="horario-hora">${horarioRango.hora}</div>
-                <div class="horario-cupos">Cupos: ${cuposOcupados}/${horarioRango.cuposMax} (${cuposRestantes} disponibles)</div>
-            </div>
-            <div class="horario-estado ${disponible ? 'disponible' : 'no-disponible'}">
-                ${disponible ? '✅ Disponible' : '❌ No disponible'}
+                <div class="horario-cupos">Cupos: ${cuposOcupados}/${horarioRango.cuposMax} (${cuposRestantes} ${cuposRestantes === 1 ? 'disponible' : 'disponibles'})</div>
+                <div class="horario-estado ${disponible ? 'disponible' : 'no-disponible'}">
+                    ${disponible ? '✅ Disponible' : '❌ No disponible'}
+                </div>
             </div>
             <button class="btn-reservar-horario" data-horario="${horarioRango.hora}" ${!disponible ? 'disabled' : ''}>
                 Reservar
@@ -165,6 +169,7 @@ function cargarHorariosEnModal() {
         if (disponible) {
             const btn = horarioItem.querySelector('.btn-reservar-horario');
             btn.addEventListener('click', () => {
+                horarioSeleccionado = horarioRango.hora;
                 abrirModalBarberos(horarioRango.hora);
             });
         }
@@ -178,6 +183,7 @@ function abrirModalBarberos(horarioSeleccionado) {
     const barberosModal = document.createElement("div");
     barberosModal.className = "modal";
     barberosModal.style.display = "block";
+    barberosModal.id = "modalBarberos";
     barberosModal.innerHTML = `
         <div class="modal-content">
             <div class="modal-header">
@@ -188,6 +194,10 @@ function abrirModalBarberos(horarioSeleccionado) {
                 <p><strong>Horario:</strong> ${horarioSeleccionado}</p>
                 <p><strong>Fecha:</strong> ${fechaSeleccionada.legible}</p>
                 <div class="barberos-select-modal" style="display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1rem;"></div>
+                <div style="display: flex; gap: 0.8rem; margin-top: 1.5rem; justify-content: flex-end;">
+                    <button class="btn-cancelar-modal" style="background: #e5dfd7; color: #4a3b2c; border: none; padding: 0.7rem 1.5rem; border-radius: 2rem; cursor: pointer; font-weight: 500;">Cancelar</button>
+                    <button class="btn-aceptar-barbero" disabled style="background: #ccc; color: #666; border: none; padding: 0.7rem 1.5rem; border-radius: 2rem; cursor: not-allowed; font-weight: 500;">Aceptar</button>
+                </div>
             </div>
         </div>
     `;
@@ -195,18 +205,59 @@ function abrirModalBarberos(horarioSeleccionado) {
     document.body.appendChild(barberosModal);
     
     const barberosContainer = barberosModal.querySelector('.barberos-select-modal');
+    const btnAceptar = barberosModal.querySelector('.btn-aceptar-barbero');
+    const btnCancelar = barberosModal.querySelector('.btn-cancelar-modal');
+    
     BARBEROS.forEach(barbero => {
         const btnBarbero = document.createElement("button");
-        btnBarbero.className = "horario-btn";
-        btnBarbero.style.padding = "0.8rem";
+        btnBarbero.className = "barbero-option";
+        btnBarbero.style.padding = "1rem";
         btnBarbero.style.width = "100%";
         btnBarbero.style.textAlign = "left";
+        btnBarbero.style.background = "#fbf9f7";
+        btnBarbero.style.border = "2px solid #ede3d8";
+        btnBarbero.style.borderRadius = "1rem";
+        btnBarbero.style.cursor = "pointer";
+        btnBarbero.style.transition = "all 0.2s";
         btnBarbero.innerHTML = `<strong>${barbero.nombre}</strong><br><small>${barbero.especialidad}</small>`;
+        
         btnBarbero.addEventListener("click", () => {
-            confirmarReserva(horarioSeleccionado, barbero);
-            barberosModal.remove();
+            // Remover selección anterior
+            document.querySelectorAll('.barbero-option').forEach(btn => {
+                btn.style.background = "#fbf9f7";
+                btn.style.borderColor = "#ede3d8";
+                btn.style.color = "#2c2b28";
+            });
+            
+            // Aplicar selección nueva
+            btnBarbero.style.background = "#b87c4f";
+            btnBarbero.style.borderColor = "#b87c4f";
+            btnBarbero.style.color = "white";
+            
+            // Guardar barbero seleccionado
+            barberoSeleccionado = barbero;
+            
+            // Habilitar botón aceptar
+            btnAceptar.disabled = false;
+            btnAceptar.style.background = "#b87c4f";
+            btnAceptar.style.color = "white";
+            btnAceptar.style.cursor = "pointer";
         });
+        
         barberosContainer.appendChild(btnBarbero);
+    });
+    
+    // Botón aceptar
+    btnAceptar.addEventListener('click', () => {
+        if (barberoSeleccionado) {
+            confirmarReserva(horarioSeleccionado, barberoSeleccionado);
+            barberosModal.remove();
+        }
+    });
+    
+    // Botón cancelar
+    btnCancelar.addEventListener("click", () => {
+        barberosModal.remove();
     });
     
     const closeBarberos = barberosModal.querySelector('.modal-close-barberos');
