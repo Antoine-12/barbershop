@@ -38,6 +38,7 @@
     <div class="nav-menu">
         <button class="nav-btn active" data-panel="panel-calendario"><i class="far fa-calendar-alt"></i> Reservar cita</button>
         <button class="nav-btn" data-panel="panel-ubicacion"><i class="fas fa-map-marker-alt"></i> Ubicación & Horarios</button>
+        <button class="nav-btn" data-panel="panel-reservas"><i class="fas fa-list-alt"></i> Mis Reservas</button>
     </div>
 
     <!-- PANEL CALENDARIO (principal) -->
@@ -45,20 +46,6 @@
         <h3><i class="far fa-calendar-check"></i> Selecciona un día disponible</h3>
         <p>Días en verde = libres | Días en rojo = ocupados (no disponibles)</p>
         <div id="calendarioDias" class="calendario-grid"></div>
-
-        <!-- Sección horarios y barberos (aparece al elegir día) -->
-        <div id="seccionHorariosBarbero" style="display: none;">
-            <div class="horarios-container">
-                <h4><i class="far fa-clock"></i> Horarios disponibles para <span id="diaSeleccionadoTexto"></span></h4>
-                <div id="listaHorarios" class="horario-buttons"></div>
-
-                <h4><i class="fas fa-users"></i> Elige tu barbero</h4>
-                <div id="listaBarberos" class="barberos-select"></div>
-
-                <button id="btnConfirmarReserva" class="btn-reservar"><i class="fas fa-scissors"></i> Confirmar reserva</button>
-                <div id="mensajeReserva" class="mensaje-reserva"></div>
-            </div>
-        </div>
     </div>
 
     <!-- PANEL UBICACIÓN Y HORAS OPERACIÓN -->
@@ -84,9 +71,33 @@
             <p><i class="fas fa-phone-alt"></i> Tel: +502 5550-1234</p>
         </div>
     </div>
+
+    <!-- PANEL MIS RESERVAS -->
+    <div id="panel-reservas" class="panel">
+        <h3><i class="fas fa-calendar-check"></i> Mis Reservas</h3>
+        <div id="listaReservas" class="reservas-lista">
+            <p style="text-align: center; color: #8b7a6b;">No tienes reservas pendientes</p>
+        </div>
+        <button id="btnLimpiarReservas" class="btn-limpiar" style="display: none;"><i class="fas fa-trash-alt"></i> Cancelar todas las reservas</button>
+    </div>
+
     <footer>
         <i class="fas fa-cut"></i> Elite BarberShop — Sistema demo de reservaciones
     </footer>
+</div>
+
+<!-- POPUP MODAL PARA HORARIOS -->
+<div id="modalHorarios" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="far fa-clock"></i> Horarios disponibles</h3>
+            <span class="modal-close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p><strong>Fecha seleccionada:</strong> <span id="modalFecha"></span></p>
+            <div id="modalListaHorarios" class="modal-horarios"></div>
+        </div>
+    </div>
 </div>
 
 <script src="script.js"></script>
