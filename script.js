@@ -80,7 +80,8 @@ function renderCalendario() {
         diaCard.className = `dia-card ${esOcupado ? 'ocupado' : 'disponible'}`;
         let diaSemana = fecha.toLocaleDateString('es-ES', { weekday: 'short' });
         let diaNumero = fecha.getDate();
-        diaCard.innerHTML = `<strong>${diaSemana}</strong><br>${diaNumero}<br><small>${fecha.getMonth()+1}/${fecha.getDate()}</small>`;
+        let mes = fecha.getMonth() + 1;
+        diaCard.innerHTML = `<strong>${diaSemana}</strong><br>${diaNumero}<br><small>${mes}/${diaNumero}</small>`;
         
         if (!esOcupado) {
             diaCard.addEventListener("click", (function(fechaObj, fechaStrClean, legible) {
@@ -97,6 +98,8 @@ function renderCalendario() {
                     cargarHorarios(fechaStrClean);
                     cargarBarberos();
                     mensajeReservaDiv.innerHTML = "";
+                    // Scroll suave hacia la sección
+                    document.querySelector('.horarios-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
                 };
             })(fecha, fechaStr, formatearLegible(fecha)));
         }
@@ -116,7 +119,10 @@ function cargarHorarios(fechaStr) {
         btn.innerText = horario;
         btn.classList.add("horario-btn");
         btn.addEventListener("click", () => {
-            document.querySelectorAll(".horario-btn").forEach(btn => btn.style.background = "#f0eae3");
+            document.querySelectorAll(".horario-btn").forEach(btn => {
+                btn.style.background = "#f0eae3";
+                btn.style.color = "#4a3b2c";
+            });
             btn.style.background = "#b87c4f";
             btn.style.color = "white";
             estado.horarioSeleccionado = horario;
@@ -156,14 +162,17 @@ function mostrarResumenReserva() {
     
     const { diaSeleccionado, horarioSeleccionado, barberoSeleccionado } = estado;
     const mensaje = `
-        ✅ ¡Reserva confirmada! <br>
+        ✅ ¡Reserva confirmada! <br><br>
         📅 <strong>Día:</strong> ${diaSeleccionado.legible} <br>
         ⏰ <strong>Horario:</strong> ${horarioSeleccionado} <br>
         ✂️ <strong>Barbero:</strong> ${barberoSeleccionado.nombre} (${barberoSeleccionado.especialidad}) <br>
-        📍 <strong>Sucursal:</strong> 1089 Calle, 2-42 Avenida, Zona UMG <br>
+        📍 <strong>Sucursal:</strong> 1089 Calle, 2-42 Avenida, Zona UMG <br><br>
         💈 ¡Te esperamos! Recuerda llegar 5 minutos antes.
     `;
     mensajeReservaDiv.innerHTML = mensaje;
+    
+    // Opcional: resetear selecciones después de confirmar
+    // (comentado para que el usuario pueda ver su reserva)
 }
 
 // Navegación entre paneles
